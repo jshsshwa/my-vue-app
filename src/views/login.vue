@@ -4,7 +4,11 @@
         <el-row style="height:100%;background: #1AA094;">
             <el-col :lg="16" :md="12" class="col_left">
                 <h1> Vite + Vue3商城管理系統</h1>
-                <span>技术支持</span>
+                <span>技術支援</span>
+                <el-link :icon="Link" href="https://github.com/jshsshwa/my-vue-app" target="_blank">
+                    GitHub1
+                </el-link>
+
             </el-col>
             <el-col :lg="8" :md="12" class="col_right">
                 <h1>登入</h1>
@@ -44,6 +48,7 @@ import { ref, reactive, onMounted, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 //结构useStore方法
 import { useStore } from 'vuex'
+
 //获取仓库实例
 const store = useStore()
 const router = useRouter()
