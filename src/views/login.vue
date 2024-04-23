@@ -3,14 +3,14 @@
     <div style="height:100% ">
         <el-row style="height:100%;background: #1AA094;">
             <el-col :lg="16" :md="12" class="col_left">
-                <h1> Vue3商城管理系统</h1>
+                <h1> Vite + Vue3商城管理系統</h1>
                 <span>技术支持</span>
             </el-col>
             <el-col :lg="8" :md="12" class="col_right">
-                <h1>登录</h1>
+                <h1>登入</h1>
                 <el-form class="login-form" ref="ruleFormRefLogin" :model="ruleFormLogin" :rules="rulesLogin">
                     <el-form-item prop="username">
-                        <el-input placeholder="请输入用户名" v-model="ruleFormLogin.username">
+                        <el-input placeholder="帳號" v-model="ruleFormLogin.username">
                             <template #prefix>
                                 <el-icon>
                                     <UserFilled />
@@ -19,7 +19,7 @@
                         </el-input>
                     </el-form-item>
                     <el-form-item prop="password">
-                        <el-input placeholder="请输入密码" v-model="ruleFormLogin.password">
+                        <el-input placeholder="密碼" v-model="ruleFormLogin.password">
                             <template #prefix>
                                 <el-icon class="el-input__icon">
                                     <el-icon>
@@ -30,7 +30,7 @@
                         </el-input>
                     </el-form-item>
                 </el-form>
-                <el-button type="primary" @click="loginHandle" :loading="loading">登录</el-button>
+                <el-button type="primary" @click="loginHandle" :loading="loading">登入</el-button>
             </el-col>
         </el-row>
     </div>

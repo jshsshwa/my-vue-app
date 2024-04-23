@@ -6,8 +6,8 @@ import nProgress from 'nprogress'
 
 const routes = [
     {
-        path: '/login',
-        component: () => import('@/views/login.vue')
+        path: '/Login',
+        component: () => import('@/views/Login.vue')
     },
     {
         path: '/',
@@ -174,9 +174,9 @@ router.beforeEach(async (to, from, next) => {
     //获取token
     const tokenStr = window.sessionStorage.getItem('token')
     //如果未登录跳转到登录页面
-    if (!tokenStr && to.path !== '/login') return next('/login')
+    if (!tokenStr && to.path !== '/Login') return next('/Login')
     //如果已登录避免重复登录
-    if (tokenStr && to.path == '/login') {
+    if (tokenStr && to.path == '/Login') {
         return next({ path: from.path ? from.path : '/' })
     }
     let hasNewRoutes = false

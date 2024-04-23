@@ -139,7 +139,7 @@ const logout = async () => {
         //删除Vuex中的用户信息
         store.commit('setUserInfo', {})
         //跳转到登录页面
-        router.push({ path: "/login" });
+        router.push({ path: "/Login" });
     }
 }
 
