@@ -34,7 +34,8 @@ const store = createStore({
         //异步操作就使用promise
         return new Promise((resolve,reject)=>{
           getUserInfoFn().then(res=>{
-            console.log(res)
+            console.log("儲存用戶資訊",res);
+            
             context.commit('setUserInfo',res.data) 
             context.commit('setMenus',res.data.menus) 
             resolve(res)
