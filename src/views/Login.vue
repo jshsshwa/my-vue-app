@@ -48,7 +48,7 @@
 
 <script setup>
 import { ElMessage } from "element-plus";
-//结构getUserInfoFn方法
+
 import { loginFn } from "@/api/login";
 import { ref, reactive, onMounted, onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
@@ -86,9 +86,9 @@ const ruleFormRefLogin = ref(null);
 const submitForm = () => {
   //校验整个form表单
   ruleFormRefLogin.value.validate(async (isValid) => {
-    console.log("isValid",isValid);
-    
-    if (!isValid) return;   
+    console.log("isValid", isValid);
+
+    if (!isValid) return;
 
     try {
       //表单验证通过，开始调用接口，将loading状态设置为true
@@ -108,8 +108,9 @@ const submitForm = () => {
       });
       //token本地存储
       window.sessionStorage.setItem("token", res.data.token);
+      
       //调用getUserInfoFn()
-      // const res2 = await getUserInfoFn()
+      // const res2 = await getUserInfoFn();
       // console.log(res2)
       // if (!res2.data || res2.data.status !== 200) {
       //     //获取管理员信息失败
@@ -117,6 +118,7 @@ const submitForm = () => {
       // }
       // //获取管理员信息成功
       // store.commit('setUserInfo',res2.data)
+
       //跳转到后台首页
       router.push("/home");
     } catch (err) {
