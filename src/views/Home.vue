@@ -19,11 +19,11 @@
                     <!-- 导航菜单 -->
                     <TagMenu></TagMenu>
                     <!-- 主体内容 -->
-                    <router-view v-slot="{Component}">
+                    <router-view v-slot="{ Component }">
                         <!-- v-slot="{Component}" 拿到点击之后的动态组件 -->
                         <!-- 页面缓存 -->
-                         <!-- 如何实现动态组件的调用 使用component -->
-                        <keep-alive :max="8">                           
+                        <!-- 如何实现动态组件的调用 使用component -->
+                        <keep-alive :max="8">
                             <component :is="Component"></component>
                         </keep-alive>
                     </router-view>

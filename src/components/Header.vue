@@ -78,7 +78,7 @@
 
 <script setup>
 //导入修改密码自定义模块
-import {useEditPassword} from '@/utils/UseEditPassword.js'
+import { useEditPassword } from '@/utils/UseEditPassword.js'
 
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
@@ -144,7 +144,7 @@ const logout = async () => {
 }
 
 //控制左侧导航菜单的展开和隐藏
-const setAsideWidthHandle=()=>{
+const setAsideWidthHandle = () => {
     store.commit('setAsideWidth')
 }
 
