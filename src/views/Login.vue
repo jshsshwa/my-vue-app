@@ -120,7 +120,7 @@ const loginHandle = () => {
 
 //监听回车
 function onKeyUp (e) {
-    console.log(e);
+    //console.log(e);
     if (e.key == "Enter") loginHandle();
 }
 onMounted(() => {
