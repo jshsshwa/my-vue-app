@@ -14,7 +14,7 @@
   "search.followSymlinks": false, //关闭rg.exe进程
   "editor.minimap.enabled": false, //关闭快速预览
   "files.autoSave": "afterDelay", //编辑自动保存
-  "editor.lineNumbers": "on", //开启行数提示
+  "editor.lineNumbers": "off", //开启行数提示
   "editor.quickSuggestions": {
     //开启自动显示建议
     "other": true,
@@ -26,7 +26,7 @@
   // "eslint.codeActionsOnSave": {
   //     "source.fixAll.eslint": true
   // },
-  "prettier.semi": true, //去掉代码结尾的分号
+  "prettier.semi": false, //去掉代码结尾的分号
   "prettier.singleQuote": false, //使用单引号替代双引号
   "javascript.format.insertSpaceBeforeFunctionParenthesis": true, //让函数(名)和后面的括号之间加个空格
 
