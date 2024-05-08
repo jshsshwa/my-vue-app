@@ -134,6 +134,8 @@ const dropdownHandle = (res) => {
     }
     //更新本地存儲
     window.sessionStorage.setItem('tabList', JSON.stringify(tabsList.value));
+    //路由跳轉
+    router.push(activeTable.value);
 };
 </script>
 

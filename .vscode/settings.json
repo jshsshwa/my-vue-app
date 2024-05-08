@@ -1,28 +1,28 @@
 {
-    "editor.fontSize": 14, //编辑器字体大小
-    "workbench.iconTheme": "vscode-icons", //vscode文件图标主题
-    "editor.defaultFormatter": "esbenp.prettier-vscode", //编辑器格式化工具
+    "editor.fontSize": 14, //編輯器字體大小
+    "workbench.iconTheme": "vscode-icons", //vscode文件圖標主題
+    "editor.defaultFormatter": "esbenp.prettier-vscode", //編輯器格式化工具
     "[javascript]": {
         "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
     }, //javascript格式化工具
 
     "editor.insertSpaces": false,
-    "workbench.editor.enablePreview": true, //打开文件不覆盖
-    "search.followSymlinks": false, //关闭rg.exe进程
-    "editor.minimap.enabled": false, //关闭快速预览
-    "files.autoSave": "afterDelay", //编辑自动保存
-    "editor.lineNumbers": "off", //开启行数提示
+    "workbench.editor.enablePreview": true, //打開文件不覆蓋
+    "search.followSymlinks": false, //關閉rg.exe進程
+    "editor.minimap.enabled": false, //關閉快速預覽
+    "files.autoSave": "afterDelay", //編輯自動保存
+    "editor.lineNumbers": "on", //開啟行數提示
     "editor.quickSuggestions": {
-        //开启自动显示建议
+        //開啟自動顯示建議
         "other": true,
         "comments": true,
         "strings": true
     },
-    "editor.tabSize": 2, //制表符符号eslint
-    "editor.formatOnSave": true, //每次保存自动格式化
-    "prettier.semi": false, //去掉代码结尾的分号
-    "prettier.singleQuote": false, //使用单引号替代双引号
-    "javascript.format.insertSpaceBeforeFunctionParenthesis": true, //让函数(名)和后面的括号之间加个空格
+    "editor.tabSize": 2, //製表符符號eslint
+    "editor.formatOnSave": true, //每次保存自動格式化
+    "prettier.semi": false, //去掉代碼結尾的分號
+    "prettier.singleQuote": false, //使用單引號替代雙引號
+    "javascript.format.insertSpaceBeforeFunctionParenthesis": true, //讓函數(名)和後面的括號之間加個空格
 
     "eslint.validate": [
         "vue",
