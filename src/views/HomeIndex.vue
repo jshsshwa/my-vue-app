@@ -10,26 +10,21 @@
                             <el-card shadow="hover">
                                 <div class="t_title">
                                     <el-skeleton-item variant="text" style="width: 40%" />
-                                    <el-skeleton-item
-                                        variant="text"
-                                        style="width: 10%; margin-left: auto"
-                                    />
+                                    <el-skeleton-item variant="text" style="width: 10%; margin-left: auto" />
                                 </div>
                                 <div class="t_main">
                                     <el-skeleton-item variant="h3" style="width: 80%" />
                                 </div>
                                 <div class="t_footer">
                                     <el-skeleton-item variant="text" style="width: 40%" />
-                                    <el-skeleton-item
-                                        variant="text"
-                                        style="width: 10%; margin-left: auto"
-                                    />
+                                    <el-skeleton-item variant="text" style="width: 10%; margin-left: auto" />
                                 </div>
                             </el-card>
                         </template>
                     </el-skeleton>
                 </el-col>
             </template>
+
             <el-col :span="6" v-for="(item, i) in panelsData" :key="i">
                 <el-card shadow="hover">
                     <div class="t_title">
@@ -43,8 +38,8 @@
                     <div class="t_footer">
                         <span>{{ item.subTitle }}</span>
                         <span>
-                            <el-tag :type="item.unitColor">{{ item.subValue }}</el-tag></span
-                        >
+                            <el-tag :type="item.unitColor">{{ item.subValue }}</el-tag>
+                        </span>
                     </div>
                 </el-card>
             </el-col>
@@ -57,12 +52,7 @@
             </el-col>
             <el-col :span="12">
                 <GoodsState gtitle="店鋪提示" desc="店鋪提示" :gData="goodsData"></GoodsState>
-                <GoodsState
-                    gtitle="商品提示"
-                    desc="商品提示"
-                    :gData="orderData"
-                    style="margin-top: 17px"
-                ></GoodsState>
+                <GoodsState gtitle="商品提示" desc="商品提示" :gData="orderData" style="margin-top: 17px"></GoodsState>
             </el-col>
         </el-row>
     </div>
@@ -83,6 +73,17 @@ const orderData = ref([]);
 
 getAdminInfo().then((res) => {
     if (res.msg && res.msg == 'ok') {
+        console.log('統計面板資料：', res.data.panels);
+
+        //修正小錯誤，可忽略。
+        //如果el-tag 的type屬性==''會錯誤，所以如果是‘’就先換掉
+        res.data.panels = res.data.panels.map((item) => {
+            if (item.unitColor === '') {
+                item.unitColor = 'primary';
+            }
+            return item;
+        });
+
         panelsData.value = res.data.panels;
     }
 });

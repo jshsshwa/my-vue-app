@@ -5,9 +5,7 @@
             <el-col :lg="16" :md="12" class="col_left">
                 <h1>Vite + Vue3商城管理系統</h1>
                 <span>技術支援</span>
-                <el-link :icon="Link" href="https://github.com/jshsshwa/my-vue-app" target="_blank">
-                    GitHub1
-                </el-link>
+                <el-link href="https://github.com/jshsshwa/my-vue-app" target="_blank"> GitHub1 </el-link>
             </el-col>
             <el-col :lg="8" :md="12" class="col_right">
                 <h1>登入</h1>
@@ -40,76 +38,76 @@
 </template>
 
 <script setup>
-import { ElMessage } from "element-plus";
-//结构getUserInfoFn方法
-import { loginFn } from "@/api/login";
-import { ref, reactive, onMounted, onBeforeMount } from "vue";
-import { useRouter } from "vue-router";
-//结构useStore方法
-import { useStore } from "vuex";
+import {ElMessage} from 'element-plus';
+//結構getUserInfoFn方法
+import {loginFn} from '@/api/login';
+import {ref, reactive, onMounted, onBeforeMount} from 'vue';
+import {useRouter} from 'vue-router';
+//結構useStore方法
+import {useStore} from 'vuex';
 
-//获取仓库实例
+//獲取倉庫實例
 const store = useStore();
 const router = useRouter();
 
-//定义loading
+//定義loading
 const loading = ref(false);
 
-//定义用户名和密码数据源
+//定義用戶名和密碼數據源
 const ruleFormLogin = reactive({
-    username: "",
-    password: "",
+    username: '',
+    password: ''
 });
-//定义用户名和密码的验证规则
+//定義用戶名和密碼的驗證規則
 const rulesLogin = {
     username: [
-        { required: true, message: "请输入用户名", trigger: "blur" },
-        { min: 5, max: 15, message: "长度应为5到15位之间", trigger: "blur" },
+        {required: true, message: '請輸入用戶名', trigger: 'blur'},
+        {min: 5, max: 15, message: '長度應為5到15位之間', trigger: 'blur'}
     ],
     password: [
-        { required: true, message: "请输入密码", trigger: "blur" },
-        { min: 5, max: 15, message: "长度应为5到15位之间", trigger: "blur" },
-    ],
+        {required: true, message: '請輸入密碼', trigger: 'blur'},
+        {min: 5, max: 15, message: '長度應為5到15位之間', trigger: 'blur'}
+    ]
 };
 
-//获取el-form表单DOM元素
+//獲取el-form表單DOM元素
 const ruleFormRefLogin = ref(null);
-//登录
+//登錄
 const loginHandle = () => {
-    //校验整个form表单
+    //校驗整個form表單
     ruleFormRefLogin.value.validate(async (isValid) => {
         try {
             if (!isValid) {
                 return;
             }
-            //表单验证通过，开始调用接口，将loading状态设置为true
+            //表單驗證通過，開始調用接口，將loading狀態設置為true
             loading.value = true;
             //...下一步
             const res = await loginFn(ruleFormLogin);
             console.log(res);
             if (!res.data || res.data.status !== 200) {
-                //登录失败提示
+                //登錄失敗提示
                 return ElMessage.error(res.msg);
             }
 
-            //登录成功提示
+            //登錄成功提示
             ElMessage({
-                message: "登录成功",
-                type: "success",
+                message: '登錄成功',
+                type: 'success'
             });
-            //token本地存储
-            window.sessionStorage.setItem("token", res.data.token);
-            //调用getUserInfoFn()
+            //token本地存儲
+            window.sessionStorage.setItem('token', res.data.token);
+            //調用getUserInfoFn()
             // const res2 = await getUserInfoFn()
             // console.log(res2)
             // if (!res2.data || res2.data.status !== 200) {
-            //     //获取管理员信息失败
-            //     return ElMessage.error('获取管理员信息失败')
+            //     //獲取管理員信息失敗
+            //     return ElMessage.error('獲取管理員信息失敗')
             // }
-            // //获取管理员信息成功
+            // //獲取管理員信息成功
             // store.commit('setUserInfo',res2.data)
-            //跳转到后台首页
-            router.push("/home");
+            //跳轉到後臺首頁
+            router.push('/home');
         } catch (err) {
             console.log(err);
         } finally {
@@ -118,18 +116,18 @@ const loginHandle = () => {
     });
 };
 
-//监听回车
-function onKeyUp (e) {
+//監聽回車
+function onKeyUp(e) {
     //console.log(e);
-    if (e.key == "Enter") loginHandle();
+    if (e.key == 'Enter') loginHandle();
 }
 onMounted(() => {
-    //添加键盘监听事件
-    document.addEventListener("keyup", onKeyUp);
+    //添加鍵盤監聽事件
+    document.addEventListener('keyup', onKeyUp);
 });
 onBeforeMount(() => {
-    //移除键盘监听
-    document.removeEventListener("keyup", onKeyUp);
+    //移除鍵盤監聽
+    document.removeEventListener('keyup', onKeyUp);
 });
 </script>
 
