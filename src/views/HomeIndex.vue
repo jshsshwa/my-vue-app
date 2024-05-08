@@ -10,14 +10,20 @@
                             <el-card shadow="hover">
                                 <div class="t_title">
                                     <el-skeleton-item variant="text" style="width: 40%" />
-                                    <el-skeleton-item variant="text" style="width: 10%;margin-left: auto;" />
+                                    <el-skeleton-item
+                                        variant="text"
+                                        style="width: 10%; margin-left: auto"
+                                    />
                                 </div>
                                 <div class="t_main">
                                     <el-skeleton-item variant="h3" style="width: 80%" />
                                 </div>
                                 <div class="t_footer">
                                     <el-skeleton-item variant="text" style="width: 40%" />
-                                    <el-skeleton-item variant="text" style="width: 10%;margin-left: auto;" />
+                                    <el-skeleton-item
+                                        variant="text"
+                                        style="width: 10%; margin-left: auto"
+                                    />
                                 </div>
                             </el-card>
                         </template>
@@ -36,61 +42,63 @@
                     </div>
                     <div class="t_footer">
                         <span>{{ item.subTitle }}</span>
-                        <span> <el-tag :type="item.unitColor">{{ item.subValue }}</el-tag></span>
+                        <span>
+                            <el-tag :type="item.unitColor">{{ item.subValue }}</el-tag></span
+                        >
                     </div>
-
                 </el-card>
             </el-col>
-
         </el-row>
-        <!-- 分类组件 -->
+        <!-- 分類組件 -->
         <NavCateList></NavCateList>
         <el-row :gutter="20">
             <el-col :span="12">
                 <Echarts></Echarts>
             </el-col>
             <el-col :span="12">
-                <GoodsState gtitle="店铺提示" desc="店铺提示" :gData="goodsData"></GoodsState>
-                <GoodsState gtitle="商品提示" desc="商品提示" :gData="orderData" style="margin-top:17px"></GoodsState>
+                <GoodsState gtitle="店鋪提示" desc="店鋪提示" :gData="goodsData"></GoodsState>
+                <GoodsState
+                    gtitle="商品提示"
+                    desc="商品提示"
+                    :gData="orderData"
+                    style="margin-top: 17px"
+                ></GoodsState>
             </el-col>
         </el-row>
-
-
     </div>
 </template>
 
 <script setup>
-import Echarts from '@/components/Echarts.vue'
-import NavCateList from '@/components/NavCateList.vue'
-import GoodsState from '@/components/GoodsState.vue'
-import gsapTo from '@/components/Gsap.vue'
-import { ref } from 'vue'
-import { getAdminInfo, getGoodsState } from '@/api/home.js'
+import Echarts from '@/components/Echarts.vue';
+import NavCateList from '@/components/NavCateList.vue';
+import GoodsState from '@/components/GoodsState.vue';
+import gsapTo from '@/components/Gsap.vue';
+import {ref} from 'vue';
+import {getAdminInfo, getGoodsState} from '@/api/home.js';
 
+//定義數據源
+const panelsData = ref([]);
+const goodsData = ref([]);
+const orderData = ref([]);
 
-//定义数据源
-const panelsData = ref([])
-const goodsData=ref([])
-const orderData=ref([])
-
-getAdminInfo().then(res => {    
+getAdminInfo().then((res) => {
     if (res.msg && res.msg == 'ok') {
-        panelsData.value = res.data.panels
+        panelsData.value = res.data.panels;
     }
-})
+});
 
-//商铺提示
-getGoodsState().then(res=>{  
-    if(res&&res.msg!=='ok'){
-        return
+//商鋪提示
+getGoodsState().then((res) => {
+    if (res && res.msg !== 'ok') {
+        return;
     }
-    goodsData.value=res.data.goods
-    orderData.value=res.data.order
-})
+    goodsData.value = res.data.goods;
+    orderData.value = res.data.order;
+});
 </script>
 
-<style lang='less' scoped>
-.content>.el-row {
+<style lang="less" scoped>
+.content > .el-row {
     margin-top: 20px;
 }
 
