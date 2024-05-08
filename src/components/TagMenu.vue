@@ -125,12 +125,7 @@ const dropdownHandle = (res) => {
         //將標籤切換回首頁
         activeTable.value = '/home';
         //數據源只保留首頁
-        tabsList.value = [
-            {
-                title: '後臺首頁',
-                path: '/home'
-            }
-        ];
+        tabsList.value = tabsList.value.filter((item) => item.path == '/home');
     }
     //更新本地存儲
     window.sessionStorage.setItem('tabList', JSON.stringify(tabsList.value));
