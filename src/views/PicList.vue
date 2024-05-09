@@ -22,7 +22,7 @@
                 </el-form-item>
                 <el-form-item label="分類排序" prop="order">
                     <!-- <el-input v-model="ruleFormAddPic.order" />-->
-                    <el-input-number v-model="ruleFormAddPic.order" @change="handleChangeNums" />
+                    <el-input-number v-model="ruleFormAddPic.order" />
                 </el-form-item>
             </el-form>
             <template #footer>
@@ -63,11 +63,6 @@ const rulesAddPic = reactive({
     name: [{required: true, message: '請輸入分類', trigger: 'blur'}],
     order: [{required: true, message: '請輸入排序', trigger: 'blur'}]
 });
-//修改排序
-const handleChangeNums = (val) => {
-    console.log(val);
-    ruleFormAddPic.order = val;
-};
 
 //關閉對話框
 const closeDiaLog = () => {
