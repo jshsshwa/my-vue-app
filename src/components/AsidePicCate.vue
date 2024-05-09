@@ -22,11 +22,11 @@
         </div>
         <div class="page">
             <el-pagination
-                v-model:current-page="currentPage"
-                v-model:page-size="pageSize"
+                :current-page="currentPage"
+                :page-size="pageSize"
                 :small="small"
                 :background="background"
-                layout=" prev,  next"
+                layout=" prev, pager,  next"
                 :total="total"
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
@@ -55,9 +55,8 @@ const small = ref('small');
 const getPicsCateData = async () => {
     const res = await getPicsCate(currentPage.value, pageSize.value);
     console.log(res);
-    if (res.msg && res.msg !== 'ok') {
-        return;
-    }
+    if (res.msg && res.msg !== 'ok') return;
+
     cateList.value = res.data.list;
     total.value = res.data.totalCount;
     //將第一條分類設置成默認選中狀態

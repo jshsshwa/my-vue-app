@@ -21,8 +21,7 @@
                     <el-input v-model="ruleFormAddPic.name" />
                 </el-form-item>
                 <el-form-item label="分類排序" prop="order">
-                    <!-- <el-input v-model="ruleFormAddPic.order" />
-                     -->
+                    <!-- <el-input v-model="ruleFormAddPic.order" />-->
                     <el-input-number v-model="ruleFormAddPic.order" @change="handleChangeNums" />
                 </el-form-item>
             </el-form>
@@ -74,6 +73,7 @@ const handleChangeNums = (val) => {
 const closeDiaLog = () => {
     //重置表單
     ruleFormRefAddPic.value.resetFields();
+    //dialogVisibleAddPics.value = false;
 };
 
 //獲取組件DOM實例
@@ -95,16 +95,14 @@ const dialogVisibleAddList = () => {
 const addPicsCateListOk = () => {
     //驗證規則是否通過？
     ruleFormRefAddPic.value.validate(async (isValid) => {
-        if (!isValid) {
-            return;
-        }
+        if (!isValid) return;
+
         if (titleVal.value == '新增圖庫分類') {
             //調用api接口
             const res = await addPicsCateListFn(ruleFormAddPic);
             console.log(res);
-            if (res.msg && res.msg !== 'ok') {
-                return;
-            }
+            if (res.msg && res.msg !== 'ok') return;
+
             //關閉對話框
             dialogVisibleAddPics.value = false;
             //獲取最新數據(子組件方法)
@@ -112,9 +110,8 @@ const addPicsCateListOk = () => {
         } else if (titleVal.value == '修改圖庫分類') {
             const res = await editPiscCateList(id.value, ruleFormAddPic);
             console.log(res);
-            if (res.msg && res.msg !== 'ok') {
-                return;
-            }
+            if (res.msg && res.msg !== 'ok') return;
+
             //關閉對話框
             dialogVisibleAddPics.value = false;
             //獲取最新數據(子組件方法)
@@ -177,7 +174,7 @@ const openUploadDialog = () => {
 }
 
 :deep(.el-card__body) {
-    padding-top: 0px !important;
+    padding: 0px !important;
     height: 100%;
 }
 
