@@ -33,7 +33,7 @@
                     </div>
                     <div class="t_main">
                         <!-- {{ item.value }} -->
-                        <gsapTo :value="item.value"></gsapTo>
+                        <Gsap :value="item.value"></Gsap>
                     </div>
                     <div class="t_footer">
                         <span>{{ item.subTitle }}</span>
@@ -51,8 +51,8 @@
                 <Echarts></Echarts>
             </el-col>
             <el-col :span="12">
-                <GoodsState gtitle="店鋪提示" desc="店鋪提示" :gData="goodsData"></GoodsState>
-                <GoodsState gtitle="商品提示" desc="商品提示" :gData="orderData" style="margin-top: 17px"></GoodsState>
+                <GoodsState title="店鋪提示" desc="店鋪提示" :gData="goodsData"></GoodsState>
+                <GoodsState title="商品提示" desc="商品提示" :gData="orderData" style="margin-top: 17px"></GoodsState>
             </el-col>
         </el-row>
     </div>
@@ -62,7 +62,7 @@
 import Echarts from '@/components/Echarts.vue';
 import NavCateList from '@/components/NavCateList.vue';
 import GoodsState from '@/components/GoodsState.vue';
-import gsapTo from '@/components/Gsap.vue';
+import Gsap from '@/components/Gsap.vue';
 import {ref} from 'vue';
 import {getAdminInfo, getGoodsState} from '@/api/home.js';
 
@@ -84,6 +84,11 @@ getAdminInfo().then((res) => {
             return item;
         });
 
+        //亂數產生測試用數據
+        res.data.panels.forEach((item) => {
+            item.value = Math.floor(Math.random() * 400);
+        });
+
         panelsData.value = res.data.panels;
     }
 });
@@ -93,6 +98,7 @@ getGoodsState().then((res) => {
     if (res && res.msg !== 'ok') {
         return;
     }
+    console.log('店鋪提示&商品提示 數據：',res.data);
     goodsData.value = res.data.goods;
     orderData.value = res.data.order;
 });

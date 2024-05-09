@@ -1,44 +1,49 @@
-<!-- eacharts图表组件 -->
+<!-- eacharts圖表組件 -->
 <template>
     <div>
         <el-card>
             <div class="e_title">
-                订单统计
+                訂單統計
                 <span>
-                    <el-check-tag v-for="(item, i) in options" :key="i" :checked="currentOptions == item.value"
-                        @change="selectOptions(item.value)">{{ item.text }}</el-check-tag>
+                    <el-check-tag
+                        v-for="(item, i) in options"
+                        :key="i"
+                        :checked="currentOptions == item.value"
+                        @change="selectOptions(item.value)"
+                    >
+                        {{ item.text }}
+                    </el-check-tag>
                 </span>
             </div>
-            <div id="e_main">
-
-            </div>
+            <div id="e_main"></div>
         </el-card>
     </div>
 </template>
 
 <script setup>
 import * as echarts from 'echarts';
-import { ref, onMounted,onBeforeUnmount } from 'vue'
-import { getEchartsData } from '@/api/home.js'
+import {ref, onMounted, onBeforeUnmount} from 'vue';
+import {getEchartsData} from '@/api/home.js';
 
 //echart star
-var myChart
+let myChart;
+
 onMounted(() => {
-    var chartDom = document.getElementById('e_main');
+    const chartDom = document.getElementById('e_main');
     myChart = echarts.init(chartDom);
-    getEcharsData()
-})
+    getEcharsData();
+});
 //echart end
 
-//页面销毁之前
-onBeforeUnmount(()=>{
-    //避免白屏，页面关闭之前，销毁myChart实例
-    if(myChart){
-        echarts.dispose(myChart)
+//頁面銷毀之前
+onBeforeUnmount(() => {
+    //避免白屏，頁面關閉之前，銷毀myChart實例
+    if (myChart) {
+        echarts.dispose(myChart);
     }
-})
+});
 
-//设置echart数据，并进行后端数据交互
+//設置echart數據，並進行後端數據交互
 const getEcharsData = async () => {
     var option = {
         xAxis: {
@@ -59,21 +64,28 @@ const getEcharsData = async () => {
             }
         ]
     };
-    //调用接口之前显示loading动画
-    myChart.showLoading()
-    //获取真实数据
-    const res = await getEchartsData(currentOptions.value)    
+    //調用接口之前顯示loading動畫
+    myChart.showLoading();
+    //獲取真實數據
+    const res = await getEchartsData(currentOptions.value);
     if (res.msg && res.msg !== 'ok') {
-        return
+        return;
     }
-    //拿到数据之后关闭loading动画
-    myChart.hideLoading()
-    option.xAxis.data = res.data.x
-    option.series[0].data = res.data.y    
-    myChart.setOption(option);
-}
 
-const currentOptions = ref('week')
+    //製作假資料
+    res.data.y.forEach((_, index) => {
+        res.data.y[index] = Math.floor(Math.random() * 100);
+    });
+    console.log('訂單統計數據：', res.data);
+
+    //拿到數據之後關閉loading動畫
+    myChart.hideLoading();
+    option.xAxis.data = res.data.x;
+    option.series[0].data = res.data.y;
+    myChart.setOption(option);
+};
+
+const currentOptions = ref('week');
 
 const options = [
     {
@@ -88,19 +100,19 @@ const options = [
         text: '天',
         value: 'hour'
     }
-]
+];
 
 const selectOptions = (op) => {
-    console.log(op)
-    currentOptions.value = op
-    getEcharsData()
-}
+    console.log(op);
+    currentOptions.value = op;
+    getEcharsData();
+};
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .e_title {
     display: flex;
-    border-bottom: 1px solid #dbdbdb;  
+    border-bottom: 1px solid #dbdbdb;
     padding-bottom: 15px;
     line-height: 30px;
 
