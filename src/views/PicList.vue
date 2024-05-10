@@ -130,14 +130,14 @@ const editCateList = (item) => {
 //刪除圖庫分類
 const delCateList = async (item) => {
     console.log(item);
-    const isdel = await ElMessageBox.confirm('是否刪除圖庫分類?', '刪除', {
+    const isDel = await ElMessageBox.confirm('是否刪除圖庫分類?', '刪除', {
         confirmButtonText: '確定',
         cancelButtonText: '取消',
         type: 'warning'
     }).catch((err) => {
         return err;
     });
-    if (isdel == 'confirm') {
+    if (isDel == 'confirm') {
         //調用刪除api
         const res = await delCateListFn(item.id);
         console.log(res);

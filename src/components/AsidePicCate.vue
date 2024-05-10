@@ -38,6 +38,8 @@
 <script setup>
 import {ref} from 'vue';
 import {getPicsCate} from '@/api/pics.js';
+//子組件向父組件傳遞數據
+const emit = defineEmits(['change', 'edit', 'del']);
 
 const cateList = ref([]);
 //總條數
@@ -88,8 +90,6 @@ const handleCurrentChange = (val) => {
     getPicsCateData();
 };
 
-//子組件向父組件傳遞數據
-const emit = defineEmits(['change']);
 //分類選擇
 const changeCateList = (i) => {
     isActive.value = i;
