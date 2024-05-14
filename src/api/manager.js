@@ -1,8 +1,8 @@
-//管理员相关API
-//导入axios
+//管理員相關API
+//導入axios
 import request from '@/utils/request'
 
-//获取管理员列表
+//獲取管理員列表
 export const getManagerList=(page,limit,keyword)=>{
     return request({
         url:`admin/manager/${page}`,
@@ -14,7 +14,7 @@ export const getManagerList=(page,limit,keyword)=>{
     })
 }
 
-//修改管理员状态
+//修改管理員狀態
 export const editState=(id,status)=>{
     return request({
         url:`admin/manager/${id}/update_status`,
@@ -25,7 +25,7 @@ export const editState=(id,status)=>{
     })
 }
 
-//新增管理员
+//新增管理員
 export const addManager=(data)=>{
     return request({
         url:`admin/manager`,
@@ -34,7 +34,7 @@ export const addManager=(data)=>{
     })
 }
 
-//修改管理员
+//修改管理員
 export const editManager=(id,data)=>{
     return request({
         url:`admin/manager/${id}`,
@@ -42,7 +42,7 @@ export const editManager=(id,data)=>{
         data
     })
 }
-//删除管理员
+//刪除管理員
 export const delManager=(id)=>{
     return request({
         url:`admin/manager/${id}/delete`,
