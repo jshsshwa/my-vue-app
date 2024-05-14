@@ -213,10 +213,8 @@ const props = defineProps({
 });
 
 //選中圖片
-const emit = defineEmits('selectImgData');
-const checkedImg = computed(() => {
-    return data.picListData.filter((item) => item.checked);
-});
+const emit = defineEmits(['selectImgData']);
+const checkedImg = computed(() => data.picListData.filter((item) => item.checked));
 
 const selectImgHandle = (item) => {
     if (item.checked && checkedImg.value.length > props.num) {

@@ -1,11 +1,11 @@
-<!-- 选择头像 -->
+<!-- 選擇頭像 -->
 <template>
     <div class="image">
-        <!-- 如果modelValue的值存在，渲染图片 -->
+        <!-- 如果modelValue的值存在，渲染圖片 -->
         <div v-if="modelValue && isShow">
             <el-image v-if="typeof modelValue == 'string'" class="avatar" :src="modelValue" fit="cover" />
             <div v-else>
-                <!-- 如果v-model的值是数组 -->
+                <!-- 如果v-model的值是數組 -->
                 <div class="picContainer" v-for="(item, i) in modelValue" :key="i">
                     <span @click="removeImg(item)">X</span>
                     <el-image class="avatar1" :src="item" fit="cover" />
@@ -17,126 +17,109 @@
             <Plus />
         </el-icon>
 
-        <el-dialog v-model="dialogVisible" title="选择图库" width="80%" top="2vh" @close="dialogClose">
-            <el-card style="height: 490px;padding-top:20px !important;padding-bottom: 20px !important;">
-                <el-container style="height: 100%;">
+        <el-dialog v-model="dialogVisible" title="選擇圖庫" width="80%" top="2vh" @close="dialogClose">
+            <el-card style="height: 490px; padding-top: 20px !important; padding-bottom: 20px !important">
+                <el-container style="height: 100%">
                     <el-container>
-                        <AsidePicCate ref="picsCateRef" @edit="editCateList" @del="delCateList" @change="changeCateListId">
-                        </AsidePicCate>
-                        <AsidePicMain :num="num" ref="picMainRef" @selectImgData="selectImgDataHandle" isOpen>
-                        </AsidePicMain>
+                        <AsidePicCate ref="picsCateRef" @edit="editCateList" @del="delCateList" @change="changeCateListId"> </AsidePicCate>
+                        <AsidePicMain :num="num" ref="picMainRef" @selectImgData="selectImgDataHandle" isOpen> </AsidePicMain>
                     </el-container>
                 </el-container>
             </el-card>
 
-
             <template #footer>
                 <span class="dialog-footer">
                     <el-button @click="dialogVisible = false">取消</el-button>
-                    <el-button type="primary" @click="submitOk">
-                        确定
-                    </el-button>
+                    <el-button type="primary" @click="submitOk"> 確定 </el-button>
                 </span>
             </template>
         </el-dialog>
-
     </div>
 </template>
 
 <script setup>
-import { ElMessageBox, ElMessage } from 'element-plus'
-import { delCateListFn } from '@/api/pics.js'
-import { ref, reactive } from 'vue'
-import AsidePicCate from '@/components/AsidePicCate.vue'
-import AsidePicMain from '@/components/AsidePicMain.vue'
+import {ElMessageBox, ElMessage} from 'element-plus';
+import {delCateListFn} from '@/api/pics.js';
+import {ref, reactive} from 'vue';
+import AsidePicCate from '@/components/AsidePicCate.vue';
+import AsidePicMain from '@/components/AsidePicMain.vue';
 
-
-const dialogVisible = ref(false)
+const dialogVisible = ref(false);
 
 // const open = () => {
 //     dialogVisible.value = true
 // }
 
-const callbackFunction = ref(null)
-const open = (callback = null)=>{
-    callbackFunction.value = callback
-    dialogVisible.value = true
-}
+const callbackFunction = ref(null);
+const open = (callback = null) => {
+    callbackFunction.value = callback;
+    dialogVisible.value = true;
+};
 
 // ================================
 
-//是否显示对话框
-const dialogVisibleAddPics = ref(false)
+//是否顯示對話框
+const dialogVisibleAddPics = ref(false);
 
-//Form数据源
+//Form數據源
 const ruleFormAddPic = reactive({
     name: '',
     order: 10
-})
-//修改分类id
-const id = ref(null)
+});
+//修改分類id
+const id = ref(null);
 
-//获取picMainRef组件DOM元素
-const picMainRef = ref(null)
+//獲取picMainRef組件DOM元素
+const picMainRef = ref(null);
 
-//获取组件DOM实例
-const picsCateRef = ref(null)
+//獲取組件DOM實例
+const picsCateRef = ref(null);
 
-//对话框标题
-const titleVal = ref('')
+//對話框標題
+const titleVal = ref('');
 
-
-
-
-
-//修改图库分类
+//修改圖庫分類
 const editCateList = (item) => {
-    //修改对话框标题
-    titleVal.value = '修改图库分类'
-    //初始化数据源
-    ruleFormAddPic.name = item.name
-    ruleFormAddPic.order = item.order
-    id.value = item.id
-    //打开对话框
-    dialogVisibleAddPics.value = true
-}
+    //修改對話框標題
+    titleVal.value = '修改圖庫分類';
+    //初始化數據源
+    ruleFormAddPic.name = item.name;
+    ruleFormAddPic.order = item.order;
+    id.value = item.id;
+    //打開對話框
+    dialogVisibleAddPics.value = true;
+};
 
-//删除图库分类
+//刪除圖庫分類
 const delCateList = async (item) => {
-    console.log(item)
-    const isdel = await ElMessageBox.confirm(
-        '是否删除图库分类?',
-        '删除',
-        {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning',
-        }
-    ).catch(err => {
-        return err
-    })
+    console.log(item);
+    const isdel = await ElMessageBox.confirm('是否刪除圖庫分類?', '刪除', {
+        confirmButtonText: '確定',
+        cancelButtonText: '取消',
+        type: 'warning'
+    }).catch((err) => {
+        return err;
+    });
     if (isdel == 'confirm') {
-        //调用删除api
-        const res = await delCateListFn(item.id)
-        console.log(res)
+        //調用刪除api
+        const res = await delCateListFn(item.id);
+        console.log(res);
         if (res.msg && res.msg !== 'ok') {
-            return ElMessage.error(res.msg)
+            return ElMessage.error(res.msg);
         }
-        //获取最新数据(子组件方法)
-        picsCateRef.value.getPicsCateData()
+        //獲取最新數據(子組件方法)
+        picsCateRef.value.getPicsCateData();
     }
-}
+};
 
-//获取子组件传递的分类id
+//獲取子組件傳遞的分類id
 const changeCateListId = (i) => {
-    console.log(i)
-    picMainRef.value.getDataById(i)
-}
+    console.log(i);
+    picMainRef.value.getDataById(i);
+};
 
-
-
-//获取子组件传过来的值（选择图片）
-//通过defindProps接收父组件传递的值
+//獲取子組件傳過來的值（選擇圖片）
+//通過defindProps接收父組件傳遞的值
 const props = defineProps({
     modelValue: [String, Array],
     num: {
@@ -147,66 +130,65 @@ const props = defineProps({
         type: Boolean,
         default: true
     }
-})
-//作为子组件向Mansger.vue组件传值
-//这样就可以实现v-model功能？
-const emit = defineEmits(["update:modelValue"])
+});
+//作為子組件向Mansger.vue組件傳值
+//這樣就可以實現v-model功能？
+const emit = defineEmits(['update:modelValue']);
 
-let urls = []
+let urls = [];
 const selectImgDataHandle = (i) => {
-    //i就是选中的图片
-    console.log(i)
-    urls = i.map(item => item.url)
-}
+    //i就是選中的圖片
+    console.log(i);
+    urls = i.map((item) => item.url);
+};
 
-//确认选择
+//確認選擇
 const submitOk = () => {
-    //多图
-    let value = []
+    //多圖
+    let value = [];
     if (props.num == 1) {
-        value = urls[0]
+        value = urls[0];
     } else {
-        value = props.isShow ? [...props.modelValue, ...urls] : [...urls]
+        value = props.isShow ? [...props.modelValue, ...urls] : [...urls];
         if (value.length > props.num) {
-            return ElMessage.error(`最多上传${props.num}张图片`)
+            return ElMessage.error(`最多上傳${props.num}張圖片`);
         }
     }
-    //修改父组件v-model的值
-    if (value&&props.isShow) {
-        emit("update:modelValue", value)
+    //修改父組件v-model的值
+    if (value && props.isShow) {
+        emit('update:modelValue', value);
     }
-    if(!props.isShow && typeof callbackFunction.value === "function"){
-        callbackFunction.value(value)
+    if (!props.isShow && typeof callbackFunction.value === 'function') {
+        callbackFunction.value(value);
     }
-    //关闭对话框
-    dialogVisible.value = false
-}
+    //關閉對話框
+    dialogVisible.value = false;
+};
 
-//关闭
+//關閉
 const dialogClose = () => {
-    picMainRef.value.resetCheck()
-}
+    picMainRef.value.resetCheck();
+};
 
-//移除图片
+//移除圖片
 const removeImg = (url) => {
-    console.log(url)
+    console.log(url);
     // props.modelValue.filter(item=>item!=url)
-    emit("update:modelValue", props.modelValue.filter(item => item != url))
-
-}
+    emit(
+        'update:modelValue',
+        props.modelValue.filter((item) => item != url)
+    );
+};
 
 defineExpose({
     open
-})
-
+});
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .image {
-
     width: 100%;
     display: flex;
-
 
     .el-icon {
         font-size: 30px;
@@ -224,7 +206,6 @@ defineExpose({
         width: 100px;
         height: 100px;
         margin-right: 15px;
-
     }
 }
 
@@ -247,7 +228,6 @@ defineExpose({
     border-bottom: 1px solid #dbdbdb;
     display: flex;
     align-items: center;
-
 }
 
 :deep(.el-dialog__body) {
