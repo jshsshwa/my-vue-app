@@ -59,8 +59,8 @@
                 v-model:current-page="page"
                 v-model:page-size="limit"
                 :page-sizes="[5, 10, 15, 20]"
-                :small="small"
-                :background="background"
+                small
+                background
                 layout="total, sizes, prev, pager, next, jumper"
                 :total="total"
                 @size-change="handleSizeChange"
@@ -111,8 +111,6 @@ import {ref, reactive} from 'vue';
 const Search = ref('Search');
 const Edit = ref('Edit');
 const Delete = ref('Delete');
-const small = ref('small');
-const background = ref('background');
 
 //分頁頁碼
 const page = ref(1);
