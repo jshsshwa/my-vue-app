@@ -118,10 +118,13 @@ const changeCateListId = (i) => {
     picMainRef.value.getDataById(i);
 };
 
+//與父組建雙向綁定(v-model='modelValue')
+const modelValue = defineModel();
+
 //獲取子組件傳過來的值（選擇圖片）
 //通過defindProps接收父組件傳遞的值
 const props = defineProps({
-    modelValue: [String, Array],
+    //modelValue: [String, Array],
     num: {
         type: Number,
         default: 1
@@ -131,9 +134,6 @@ const props = defineProps({
         default: true
     }
 });
-//作為子組件向Mansger.vue組件傳值
-//這樣就可以實現v-model功能？
-const emit = defineEmits(['update:modelValue']);
 
 let urls = [];
 const selectImgDataHandle = (i) => {
@@ -145,18 +145,21 @@ const selectImgDataHandle = (i) => {
 //確認選擇
 const submitOk = () => {
     //多圖
+    // console.log('props.num', props.num);
+    // console.log('props.isShow', props.isShow);
     let value = [];
     if (props.num == 1) {
         value = urls[0];
     } else {
-        value = props.isShow ? [...props.modelValue, ...urls] : [...urls];
+        //value = props.isShow ? [...props.modelValue, ...urls] : [...urls];
+        value = props.isShow ? [modelValue.value, ...urls] : [...urls];
         if (value.length > props.num) {
             return ElMessage.error(`最多上傳${props.num}張圖片`);
         }
     }
     //修改父組件v-model的值
     if (value && props.isShow) {
-        emit('update:modelValue', value);
+        modelValue.value = value;
     }
     if (!props.isShow && typeof callbackFunction.value === 'function') {
         callbackFunction.value(value);
@@ -172,12 +175,9 @@ const dialogClose = () => {
 
 //移除圖片
 const removeImg = (url) => {
-    console.log(url);
-    // props.modelValue.filter(item=>item!=url)
-    emit(
-        'update:modelValue',
-        props.modelValue.filter((item) => item != url)
-    );
+    console.log('移除圖片', url);
+
+    modelValue.value.filter((item) => item != url);
 };
 
 defineExpose({
