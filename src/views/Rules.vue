@@ -21,7 +21,7 @@
                                 v-model="data.status"
                                 :inactive-value="0"
                                 :active-value="1"
-                                @change="switchChange($event, data)"
+                                @change="switchChange(data)"
                                 @click.stop=""
                             />
                             <el-button type="primary" :icon="Edit" size="small" @click.stop="editRules(data)" />
@@ -236,9 +236,9 @@ const getRulesList = async () => {
 getRulesList();
 
 //修改選單權限啟用狀態
-const switchChange = async (e, row) => {
-    console.log(row);
-    const res = await editStatusFn(row.id, e);
+const switchChange = async (row) => {
+    console.log('修改選單權限啟用狀態', row);
+    const res = await editStatusFn(row.id, row.status);
     if (res.msg && res.msg !== 'ok') {
         if (row.status == 0) {
             row.status = 1;
