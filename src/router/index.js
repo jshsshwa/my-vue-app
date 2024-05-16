@@ -72,7 +72,7 @@ const routes = [
                 name: '/access/list',
                 component: () => import('@/views/Rules.vue'),
                 meta: {
-                    title: '菜單權限管理'
+                    title: '選單權限管理'
                 }
             },
             {

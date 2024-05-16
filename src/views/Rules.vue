@@ -42,8 +42,8 @@
                 </el-form-item>
                 <el-form-item label="選單/規則">
                     <el-radio-group v-model="formData.menu">
-                        <el-radio :label="1" border>選單</el-radio>
-                        <el-radio :label="0" border>規則</el-radio>
+                        <el-radio :value="1" border>選單</el-radio>
+                        <el-radio :value="0" border>規則</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="名稱">
@@ -221,7 +221,7 @@ const getRulesList = async () => {
     isLoading.value = true;
     const res = await getRulesListFn();
     isLoading.value = false;
-    console.log(res);
+    console.log('獲取權限列表', res);
     if (res.msg && res.msg !== 'ok') {
         return ElMessage.error(res.msg);
     }
