@@ -23,7 +23,7 @@
                     <template #default="scope">
                         <div>
                             <el-tooltip effect="dark" content="分配權限" placement="top" :enterable="false">
-                                <el-button type="primary" icon="Share" size="small" @click="oppenSetRoleDialog(scope.row)" />
+                                <el-button type="primary" icon="Share" size="small" @click="openSetRoleDialog(scope.row)" />
                             </el-tooltip>
                             <el-button type="warning" icon="Edit" size="small" @click="editRoles(scope.row)" />
                             <el-button type="danger" icon="Delete" size="small" @click="delRolusById(scope.row.id)" />
@@ -67,8 +67,8 @@
             >
                 <template #default="{node, data}">
                     <span>
-                        <el-tag v-if="data.menu == 1">菜單</el-tag><el-tag type="success" v-if="data.menu == 0">權限</el-tag
-                        >{{ data.name }}</span
+                        <el-tag v-if="data.menu == 1">菜單</el-tag>
+                        <el-tag type="success" v-else>權限</el-tag>{{ data.name }}</span
                     >
                 </template>
             </el-tree-v2>
@@ -95,8 +95,6 @@ const titleName = ref('');
 const roleId = ref(0);
 //角色表格數據源
 const tableData = ref([]);
-//分頁頁碼
-const page = ref(1);
 //控制對話框顯示和隱藏
 const dialogVisibleAddRole = ref(false);
 //打開新增對話框
@@ -123,6 +121,22 @@ const rulesRoles = reactive({
 
 //分配權限對話框
 const dialogVisibleSetRole = ref(false);
+//分配權限數據源
+const rolesDtaList = ref([]);
+//獲取el-tree DOM元素
+const treeRef = ref(null);
+//el-tree配置對象
+const propsSetRole = reactive({
+    value: 'id',
+    label: 'name',
+    children: 'child'
+});
+//默認展開的以為數組
+const defaultRoles = ref([]);
+//選中的權限id
+const defaultId = ref([]);
+//el-tree在顯示checkBox的情況下，是否嚴格的遵循父子不互相關聯的做法，默認為 false
+const checkStrictly = ref(false);
 
 //修改新增狀態
 const chahgeStatus = (e) => {
@@ -213,8 +227,8 @@ const editStatus = async (e, row) => {
 
 //獲取角色列表
 const getRolesList = async () => {
-    const res = await getRolesListFn(page.value);
-    console.log(res);
+    const res = await getRolesListFn(1);
+    console.log('獲取角色列表', res.data.list);
     if (res.msg && res.msg !== 'ok') {
         return ElMessage.error(res.msg);
     }
@@ -222,47 +236,25 @@ const getRolesList = async () => {
 };
 getRolesList();
 
-//分配權限數據源
-const rolesDtaList = ref([]);
-
-//樹形控件配置對象
-const propsSetRole = reactive({
-    value: 'id',
-    label: 'name',
-    children: 'child'
-});
-
-//默認展開的以為數組
-const defaultRoles = ref([]);
-//選中的權限id
-const defaultId = ref([]);
-
 //注意 分配角色的數據就是權限管理數據
 getRulesListFn().then((res) => {
-    console.log(res);
+    console.log('分配權限數據源', res);
     rolesDtaList.value = res.data.list;
     //循環遍歷數組，獲取默認展開值
-    defaultRoles.value = res.data.list.map((item) => {
-        //默認展開一級節點
-        return item.id;
-    });
+    defaultRoles.value = res.data.list.map((item) => item.id);
+    //console.log('默認展開一級節點', defaultRoles.value);
 });
 
-//獲取屬性控件DOM元素
-const treeRef = ref(null);
-
 //打開分配角色對話框
-const oppenSetRoleDialog = (row) => {
+const openSetRoleDialog = (row) => {
     //獲取數據之前設置為不關聯
     checkStrictly.value = true;
     //row是當前角色信息
-    console.log(row);
+    console.log('當前角色信息', row);
     //當前角色ID
     roleId.value = row.id;
     //獲取默認選中權限ID數組
-    defaultId.value = row.rules.map((item) => {
-        return item.id;
-    });
+    defaultId.value = row.rules.map((item) => item.id);
     //設置樹形控件默認選中
     setTimeout(() => {
         treeRef.value.setCheckedKeys(defaultId.value);
@@ -274,14 +266,11 @@ const oppenSetRoleDialog = (row) => {
 };
 
 //選擇
-const treeCheck = (...e) => {
-    console.log(e);
-    const {checkedKeys, halfCheckedKeys} = e[1];
-    defaultId.value = [...checkedKeys, ...halfCheckedKeys];
+const treeCheck = (data, info) => {
+    //將info.checkedKeys, info.halfCheckedKeys兩個陣列展開 合併成一個新陣列
+    defaultId.value = [info.checkedKeys, info.halfCheckedKeys];
+    //console.log('defaultId.value', defaultId.value);
 };
-
-//在顯示覆選框的情況下，是否嚴格的遵循父子不互相關聯的做法，默認為 false
-const checkStrictly = ref(false);
 
 //確定分配角色
 const setRoleOk = async () => {
