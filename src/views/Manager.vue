@@ -214,6 +214,7 @@ const colseAddDialogHandle = () => {
 };
 //確定新增管理員
 const addManagerOkHandle = () => {
+    //console.log(ruleFormRefAddManager.value);
     //校驗表單數據
     ruleFormRefAddManager.value.validate(async (isValid) => {
         if (!isValid) {

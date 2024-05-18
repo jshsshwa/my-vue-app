@@ -36,5 +36,6 @@
     },
     "[vue]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "cSpell.words": ["endregion"]
 }
