@@ -178,6 +178,93 @@ import goodsBanner from '@/components/Banner.vue';
 import goodsInfo from '@/components/editGoodsInfo.vue';
 import goodsSku from '@/components/GoodsSku.vue';
 
+//定義參數
+//商品id
+const goodsId = ref(0);
+
+//商品分類
+const goodsCate = ref([]);
+
+//新增對話框
+const dialogVisibleAddGoods = ref(false);
+
+//對話框標題
+const tips = ref('');
+
+//table數據源（商品列表）
+const tableData = ref([]);
+const page = ref(1);
+
+//商品id數組
+const goodsIds = ref([]);
+
+//table表格DOM元素
+const tableRef = ref(null);
+//輪播圖DOM元素
+const goodsBannerRef = ref(null);
+//商品詳情DOM
+const goodsInfoRef = ref(null);
+const goodsSkuRef = ref(null);
+
+//查詢參數
+const queryData = reactive({
+    //訂單類型
+    tab: 'all',
+    //搜索關鍵字
+    title: '',
+    //分類id
+    category_id: null,
+    //商品個數
+    limit: 5
+});
+
+//新增商品數據源
+const addGoodsData = reactive({
+    title: '',
+    category_id: null,
+    cover: '',
+    unit: '件',
+    stock: 100,
+    min_stock: 10,
+    //原價格
+    min_oprice: null,
+    //活動價格
+    min_price: null,
+    desc: '',
+    //是否顯示庫存
+    stock_display: 1,
+    //是否上架
+    status: 1
+});
+
+//獲取商品列表
+const getGoodsList = async () => {
+    const res = await getGoodsListFn(page.value, queryData);
+    //console.log(res)
+    if (res.msg && res.msg !== 'ok') {
+        return ElMessage.error(res.msg);
+    }
+    //新增屬性，為設置輪播圖按鈕綁定loading事件
+    tableData.value = res.data.list.map((item) => {
+        item.isLoading = false;
+        item.goodsInfoLoading = false;
+        item.goodsSkuLoading = false;
+        return item;
+    });
+};
+getGoodsList();
+
+//獲取商品分類
+const getGoodsCate = async () => {
+    const res = await getGoodsCateFn();
+    console.log(res);
+    if (res.msg && res.msg !== 'ok') {
+        return ElMessage.error(res);
+    }
+    goodsCate.value = res.data;
+};
+getGoodsCate();
+
 //批量刪除
 const delAllHandle = async () => {
     const isdel = await ElMessageBox.confirm('是否刪除？', '刪除', {
@@ -228,12 +315,6 @@ const resetHandle = async () => {
     });
 };
 
-//輪播圖DOM元素
-const goodsBannerRef = ref(null);
-//商品詳情DOM
-const goodsInfoRef = ref(null);
-const goodsSkuRef = ref(null);
-
 //打開商品詳情
 const oppenGoodsInfoDialog = (row) => {
     //調用子組件方法的同時傳入了一個實參
@@ -249,15 +330,6 @@ const oppenSetBanner = (row) => {
     goodsBannerRef.value.openDialog(row);
 };
 
-//table數據源（商品列表）
-const tableData = ref([]);
-const page = ref(1);
-
-//商品id數組
-const goodsIds = ref([]);
-
-//table表格DOM元素
-const tableRef = ref(null);
 //選擇事件
 const selectGoods = (e) => {
     goodsIds.value = e.map((item) => item.id);
@@ -278,26 +350,6 @@ const setGoodsStatus = async (status) => {
     getGoodsList();
 };
 
-//查詢參數
-const queryData = reactive({
-    //訂單類型
-    tab: 'all',
-    //搜索關鍵字
-    title: '',
-    //分類id
-    category_id: null,
-    //商品個數
-    limit: 5
-});
-
-//商品分類
-const goodsCate = ref([]);
-
-//新增對話框
-const dialogVisibleAddGoods = ref(false);
-
-//對話框標題
-const tips = ref('');
 //打開新增對話框
 const oppenAddDialog = () => {
     tips.value = '新增';
@@ -363,55 +415,6 @@ const submitOk = async () => {
     }
 };
 
-//新增商品數據源
-const addGoodsData = reactive({
-    title: '',
-    category_id: null,
-    cover: '',
-    unit: '件',
-    stock: 100,
-    min_stock: 10,
-    //原價格
-    min_oprice: null,
-    //活動價格
-    min_price: null,
-    desc: '',
-    //是否顯示庫存
-    stock_display: 1,
-    //是否上架
-    status: 1
-});
-
-//商品id
-const goodsId = ref(0);
-
-//獲取商品列表
-const getGoodsList = async () => {
-    const res = await getGoodsListFn(page.value, queryData);
-    //console.log(res)
-    if (res.msg && res.msg !== 'ok') {
-        return ElMessage.error(res.msg);
-    }
-    //新增屬性，為設置輪播圖按鈕綁定loading事件
-    tableData.value = res.data.list.map((item) => {
-        item.isLoading = false;
-        item.goodsInfoLoading = false;
-        item.goodsSkuLoading = false;
-        return item;
-    });
-};
-getGoodsList();
-
-//獲取商品分類
-const getGoodsCate = async () => {
-    const res = await getGoodsCateFn();
-    console.log(res);
-    if (res.msg && res.msg !== 'ok') {
-        return ElMessage.error(res);
-    }
-    goodsCate.value = res.data;
-};
-getGoodsCate();
 </script>
 
 <style lang="less" scoped>
