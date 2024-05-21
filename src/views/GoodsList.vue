@@ -240,7 +240,7 @@ const addGoodsData = reactive({
 //獲取商品列表
 const getGoodsList = async () => {
     const res = await getGoodsListFn(page.value, queryData);
-    //console.log(res)
+    console.log('獲取商品列表', res);
     if (res.msg && res.msg !== 'ok') {
         return ElMessage.error(res.msg);
     }
@@ -257,7 +257,7 @@ getGoodsList();
 //獲取商品分類
 const getGoodsCate = async () => {
     const res = await getGoodsCateFn();
-    console.log(res);
+    console.log('獲取商品分類', res);
     if (res.msg && res.msg !== 'ok') {
         return ElMessage.error(res);
     }
@@ -414,7 +414,6 @@ const submitOk = async () => {
         getGoodsList();
     }
 };
-
 </script>
 
 <style lang="less" scoped>

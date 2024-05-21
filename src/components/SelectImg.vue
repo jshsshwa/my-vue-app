@@ -176,8 +176,12 @@ const dialogClose = () => {
 //移除圖片
 const removeImg = (url) => {
     console.log('移除圖片', url);
+    console.log('圖片List', modelValue.value);
+    modelValue.value = modelValue.value.filter((item) => item !== url);
 
-    modelValue.value.filter((item) => item != url);
+    setTimeout(() => {
+        console.log('圖片List', modelValue.value);
+    }, '1000');
 };
 
 defineExpose({
