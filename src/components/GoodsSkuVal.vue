@@ -1,9 +1,6 @@
 <!-- 規格值 GoodsSkuAdd的組組件 -->
 <template>
     <div>
-        <!-- <span v-for="(sub, i) in item.goodsSkusCardValue" :key="i">
-                        {{ sub.text }}
-                    </span> -->
         <el-tag v-for="(tag, i) in item.goodsSkusCardValue" :key="i" closable @close="handleClose(tag)">
             <el-input v-model="tag.text" class="inputStyle" @change="editSkuVal($event, tag)"></el-input>
         </el-tag>

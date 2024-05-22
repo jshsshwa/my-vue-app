@@ -11,7 +11,6 @@ export const skuTable = ref([])
 
 //初始化規格選項列表
 export function initSkuList(goodsInfo) {
-    console.log(goodsInfo)
     skuList.value = goodsInfo.goodsSkusCard.map(item => {
         //追加一個text屬性
         item.text = item.name
@@ -23,9 +22,11 @@ export function initSkuList(goodsInfo) {
     })
     //表格聯動
     skuTable.value = goodsInfo.goodsSkus
-    console.log(skuTable.value)
+    
+    console.log('所有商品資訊',goodsInfo)
+    console.log('goodsSkusCard_skuList 追加一個text屬性',skuList.value)
+    console.log('表格聯動goodsSkus_skuTable',skuTable.value)
 }
-
 
 //添加商品規格
 export const addSku = async () => {
@@ -89,19 +90,20 @@ export const delSku = async (skuId) => {
     getTableData()
 }
 
-//初始化規格值
+//添加規格'標籤Tag'
 export function initSkuItemVal(id) {
     //獲取到規格值對象
     const item = skuList.value.find(o => o.id == id)
-    //star
+
     const inputValue = ref('')
     const inputVisible = ref(false)
     const InputRef = ref()
 
+    //刪除標籤值
     const handleClose = async (tag) => {
         //console.log(tag)        
         const res = await delSkuValFn(tag.id)
-        console.log(res)
+        console.log('刪除標籤',res)
         if (res.msg && res.msg !== 'ok') {
             return
         }
@@ -113,28 +115,33 @@ export function initSkuItemVal(id) {
     const showInput = () => {
         inputVisible.value = true
         nextTick(() => {
-            InputRef.value.input.focus()
+            InputRef.value.input.fo對us()
         })
     }
-
+    
+    //新增商品標籤選項
     const handleInputConfirm = async () => {
+        // 查找是否有 value 是否已存在
+        const found = data.some(item => item.value === inputValue.value);
+
         const res = await addSkuValFn({
             goods_skus_card_id: id,
             name: item.name,
             order: 2,
             value: inputValue.value
         })
-        console.log(res)
+        console.log('新增商品標籤選項',res)
         if (res.msg && res.msg !== 'ok') {
             return
         }
         item.goodsSkusCardValue.push({ ...res.data, text: inputValue.value })
         inputVisible.value = false
         inputValue.value = ''
+        console.log('新增商品標籤選項結果',item.goodsSkusCardValue)
         //重新獲規格表格數據
         getTableData()
     }
-    //修改規格值
+    //修改規格標籤
     const editSkuVal = async (val, tag) => {
         console.log(val)
         //val是最新值
@@ -154,10 +161,7 @@ export function initSkuItemVal(id) {
         getTableData()
     }
 
-    //刪除規格值
 
-
-    //end
     return {
         item,
         inputValue,
@@ -234,14 +238,14 @@ function getTableData() {
 
         //做sku排列,排列之後的數據給arr
         let arr = skuChange(...list)
-        console.log(arr)
+        console.log('做sku排列',arr)
         //把轉化之後的值賦值給 skuTable
         //skuTable.value=
         //o是數組
 
         // //獲取之前的規格列表,將規格ID排序之後轉化成字符串
         // let beforeSkuList=JSON.parse(JSON.stringify(skuTable.value)).map(o=>{
-        //  裡  //為goodsSkus數組中每一項添加skusId屬性
+        裡/裡裡裡  //為goodsSkus數組中每一項添加skusId屬性
         //     //skusId屬性值是skus數組中的id
         //     //o.skusId=
         //     if(!Array.isArray(o.skus)){
