@@ -1,6 +1,6 @@
 <!-- 多規格表格 -->
 <template>
-    <el-form-item label="設格設置">
+    <el-form-item label="規格設置">
         <table cellpadding="0" cellspacing="0">
             <thead>
                 <tr>

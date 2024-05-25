@@ -53,9 +53,9 @@
 </template>
 
 <script setup>
+import goodsSkuAdd from '@/components/GoodsSkuAdd.vue';
 import skuTableList from '@/components/skuTable.vue';
 import {initSkuList, goodsId, skuTable} from '@/utils/useSku.js';
-import goodsSkuAdd from '@/components/GoodsSkuAdd.vue';
 import {ElMessage} from 'element-plus';
 import {editStuFn, getGoodsInfoById} from '@/api/goods.js';
 import {ref, reactive} from 'vue';
