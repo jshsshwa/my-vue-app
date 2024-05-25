@@ -1,52 +1,51 @@
-//导入axios
-import request from '@/utils/request'
+//導入axios
+import request from '@/utils/request';
 
-//获取商品分类列表
-export const getGoodsCateFn=()=>{
+//獲取商品分類列表
+export const getGoodsCateFn = () => {
     return request({
-        url:'admin/category',
-        method:'GET'
-    })
-}
+        url: 'admin/category',
+        method: 'GET'
+    });
+};
 
-
-//新增商品分类
-export const addGoodsCateFn=(name)=>{
+//新增商品分類
+export const addGoodsCateFn = (name) => {
     return request({
-        url:'admin/category',
-        method:'POST',
-        data:{
+        url: 'admin/category',
+        method: 'POST',
+        data: {
             name
         }
-    })
-}
+    });
+};
 
-//编辑商品分类
-export const editGoodsCateFn=(id,name)=>{
+//編輯商品分類
+export const editGoodsCateFn = (id, name) => {
     return request({
-        url:`admin/category/${id}`,
-        method:'POST',
-        data:{
+        url: `admin/category/${id}`,
+        method: 'POST',
+        data: {
             name
         }
-    })
-}
+    });
+};
 
-//编辑商品分类状态
-export const editGoodsCateStatus=(id,status)=>{
+//編輯商品分類狀態
+export const editGoodsCateStatus = (id, status) => {
     return request({
-        url:`admin/category/${id}/update_status`,
-        method:'POST',
-        data:{
+        url: `admin/category/${id}/update_status`,
+        method: 'POST',
+        data: {
             status
         }
-    })
-}
+    });
+};
 
-//删除商品分类
-export const delEditGoodsCate=(id)=>{
+//刪除商品分類
+export const delEditGoodsCate = (id) => {
     return request({
-        url:`admin/category/${id}/delete`,
-        method:'POST'
-    })
-}
+        url: `admin/category/${id}/delete`,
+        method: 'POST'
+    });
+};
