@@ -1,4 +1,4 @@
-<!-- 优惠券模块 -->
+<!-- 優惠券模塊 -->
 <template>
     <div>
         <el-card>
@@ -6,35 +6,35 @@
                 <el-button type="primary" size="small" @click="oppenDialog">新增</el-button>
             </div>
             <el-table :data="tableData" style="width: 100%" stripe>
-                <el-table-column label="优惠券名称" width="330">
+                <el-table-column label="優惠券名稱" width="330">
                     <template #default="scope">
-                        <div :class="scope.row.statusVal == '领取中' ? 'coupon' : 'coupon1'">
+                        <div :class="scope.row.statusVal == '領取中' ? 'coupon' : 'coupon1'">
                             <h1>{{ scope.row.name }}</h1>
                             <span>{{ scope.row.start_time }}~~{{ scope.row.end_time }}</span>
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="statusVal" label="状态" />
-                <el-table-column prop="min_price" label="优惠">
+                <el-table-column prop="statusVal" label="狀態" />
+                <el-table-column prop="min_price" label="優惠">
                     <template #default="scope">
                         <div>
-                            <span v-if="scope.row.type == 0">满减 ￥{{ scope.row.value }}</span>
+                            <span v-if="scope.row.type == 0">滿減 ￥{{ scope.row.value }}</span>
                             <span v-if="scope.row.type == 1">折扣 {{ scope.row.value }}折</span>
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="total" label="发放数量" />
+                <el-table-column prop="total" label="發放數量" />
                 <el-table-column prop="used" label="已使用" />
                 <el-table-column label="操作">
                     <template #default="scope">
                         <div>
-                        <!--     删除按钮：未开始、已失效、已结束
-                                 编辑按钮：未开始
-                                 失效按钮：领取中
+                        <!--     刪除按鈕：未開始、已失效、已結束
+                                 編輯按鈕：未開始
+                                 失效按鈕：領取中
                                      -->
-                            <el-button v-if="scope.row.statusVal=='未开始'"  type="primary" :icon="Edit" @click="oppenEdit(scope.row)" size="small" />
-                            <el-button v-if="scope.row.statusVal!=='领取中'" type="danger" :icon="Delete" @click="delCoupon(scope.row.id)" size="small" />
-                            <el-button v-if="scope.row.statusVal=='领取中'" type="warning" size="small" @click="couponEnd(scope.row.id)">失效</el-button>
+                            <el-button v-if="scope.row.statusVal=='未開始'"  type="primary" :icon="Edit" @click="oppenEdit(scope.row)" size="small" />
+                            <el-button v-if="scope.row.statusVal!=='領取中'" type="danger" :icon="Delete" @click="delCoupon(scope.row.id)" size="small" />
+                            <el-button v-if="scope.row.statusVal=='領取中'" type="warning" size="small" @click="couponEnd(scope.row.id)">失效</el-button>
 
                         </div>
                     </template>
@@ -43,12 +43,12 @@
         </el-card>
         <el-dialog v-model="dialogVisible" :title="TipsTitle" width="40%">
             <el-form :model="formData" label-width="120px">
-                <el-form-item label="优惠券名称">
+                <el-form-item label="優惠券名稱">
                     <el-input v-model="formData.name" />
                 </el-form-item>
-                <el-form-item label="类型">
+                <el-form-item label="類型">
                     <el-radio-group v-model="formData.type">
-                        <el-radio :label="0" border>满减</el-radio>
+                        <el-radio :label="0" border>滿減</el-radio>
                         <el-radio :label="1" border>折扣</el-radio>
                     </el-radio-group>
                 </el-form-item>
@@ -57,11 +57,11 @@
                         <template #append>{{ formData.type == 0 ? '元' : '折' }}</template>
                     </el-input>
                 </el-form-item>
-                <el-form-item label="数量">
+                <el-form-item label="數量">
                     <el-input-number v-model="formData.total" :min="1" :max="1000" />
 
                 </el-form-item>
-                <el-form-item label="最低使用价格">
+                <el-form-item label="最低使用價格">
                     <el-input v-model="formData.min_price" class="valueStyle" type="number" :min="0">
                         <template #append>元</template>
                     </el-input>
@@ -69,9 +69,9 @@
                 <el-form-item label="描述">                    
                     <el-input v-model="formData.desc" :autosize="{ minRows: 2, maxRows: 4 }" type="textarea" />
                 </el-form-item>
-                <el-form-item label="活动时间">
-                    <el-date-picker v-model="dataTime" format="YYYY-MM-DD HH:mm:ss" type="datetimerange"
-                        range-separator="To" start-placeholder="开始时间" end-placeholder="结束时间" :editable="false" />
+                <el-form-item label="活動時間">
+                    <el-date-picker v-model="dataTime" format="YYYY-MM-DD HH:mm" type="datetimerange"
+                        range-separator="To" start-placeholder="開始時間" end-placeholder="結束時間" :editable="false" />
                 </el-form-item>
                 <el-form-item label="排序">
                     <el-input-number v-model="formData.order" :min="1" :max="1000" />
@@ -82,7 +82,7 @@
                 <span class="dialog-footer">
                     <el-button @click="dialogVisible = false">取消</el-button>
                     <el-button type="primary" @click="addCouponOk">
-                        确定
+                        確定
                     </el-button>
                 </span>
             </template>
@@ -100,10 +100,10 @@ import { Delete, Edit } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { getCouponListFn, addCouponFn, editCouponFn, delCouponFn ,endCouponFn} from '@/api/coupon.js'
 import { ref, reactive, computed } from 'vue'
-//优惠券列表数据源
+//優惠券列表數據源
 const tableData = ref([])
 
-//获取数据源
+//獲取數據源
 const getCouponList = async () => {
     const res = await getCouponListFn(1)
     console.log(res)
@@ -111,7 +111,7 @@ const getCouponList = async () => {
         return ElMessage.error(res.msg)
     }
     tableData.value = res.data.list.map(item => {
-        //为服务器返回的数组追加一个statusVal状态属性
+        //為服務器返回的數組追加一個statusVal狀態屬性
         item.statusVal = couPonStatus(item)
         return item
     })
@@ -119,11 +119,11 @@ const getCouponList = async () => {
 }
 getCouponList()
 
-//对话框标题
+//對話框標題
 const TipsTitle = ref('')
-//对话框显示和隐藏
+//對話框顯示和隱藏
 const dialogVisible = ref(false)
-//新增Form表单数据源
+//新增Form表單數據源
 const formData = reactive({
     name: '',
     type: 0,
@@ -135,14 +135,14 @@ const formData = reactive({
     desc: '',
     order: 1
 })
-//优惠券id
+//優惠券id
 const id = ref(0)
 
-// //radio选择
+// //radio選擇
 // const radioChange = (e) => {
 //     formData.type = e
 // }
-// //优惠券数量选择
+// //優惠券數量選擇
 // const handleChangeTotal = (e) => {
 //     formData.total = e
 // }
@@ -151,7 +151,7 @@ const id = ref(0)
 //     formData.order = e
 // }
 
-//打开新增对话框
+//打開新增對話框
 const oppenDialog = () => {
     TipsTitle.value = '新增'
     formData.name = ''
@@ -166,7 +166,7 @@ const oppenDialog = () => {
     dialogVisible.value = true
 }
 
-//确定新增
+//確定新增
 const addCouponOk = async () => {
     beforeSubmit(formData)
     if (TipsTitle.value == '新增') {
@@ -177,7 +177,7 @@ const addCouponOk = async () => {
         }
         dialogVisible.value = false
         getCouponList()
-    } else if (TipsTitle.value == '编辑') {
+    } else if (TipsTitle.value == '編輯') {
         const res = await editCouponFn(id.value, formData)
         if (res.msg && res.msg !== 'ok') {
             return ElMessage.error(res.msg)
@@ -187,9 +187,9 @@ const addCouponOk = async () => {
     }
 }
 
-//打开编辑对话框
+//打開編輯對話框
 const oppenEdit = (row) => {
-    TipsTitle.value = '编辑'
+    TipsTitle.value = '編輯'
     id.value = row.id
     console.log(row)
     formData.name = row.name
@@ -206,14 +206,14 @@ const oppenEdit = (row) => {
 
 }
 
-//删除
+//刪除
 const delCoupon = async (id) => {
-    //是否删除？
+    //是否刪除？
     const isdel = await ElMessageBox.confirm(
-        '是否删除?',
-        '删除',
+        '是否刪除?',
+        '刪除',
         {
-            confirmButtonText: '确定',
+            confirmButtonText: '確定',
             cancelButtonText: '取消',
             type: 'warning',
         }
@@ -227,7 +227,7 @@ const delCoupon = async (id) => {
         return ElMessage.error(res.msg)
     }
     ElMessage({
-        message: '删除成功',
+        message: '刪除成功',
         type: 'success',
     })
     getCouponList()
@@ -238,23 +238,23 @@ const delCoupon = async (id) => {
 
 
 
-//判断优惠券状态
+//判斷優惠券狀態
 function couPonStatus(row) {
-    let state = "领取中"
+    let state = "領取中"
     let start_time = (new Date(row.start_time)).getTime()
     let now = (new Date()).getTime()
     let end_time = (new Date(row.end_time)).getTime()
     if (start_time > now) {
-        state = "未开始"
+        state = "未開始"
     } else if (end_time < now) {
-        state = "已结束"
+        state = "已結束"
     } else if (row.status == 0) {
         state = "已失效"
     }
     return state
 }
 
-//选择时间
+//選擇時間
 const dataTime = computed({
     get() {
         return formData.start_time && formData.end_time ? [formData.start_time, formData.end_time] : []
@@ -265,20 +265,20 @@ const dataTime = computed({
     }
 })
 
-//提交之前转成时间戳
+//提交之前轉成時間戳
 const beforeSubmit = (data) => {
     data.start_time = (new Date(data.start_time)).getTime()
     data.end_time = (new Date(data.end_time)).getTime()
     return data
 }
 
-//优惠券失效
+//優惠券失效
 const couponEnd = async (id) => {
     const isdel = await ElMessageBox.confirm(
-        '是否停止该优惠券？',
+        '是否停止該優惠券？',
         '失效',
         {
-            confirmButtonText: '确定',
+            confirmButtonText: '確定',
             cancelButtonText: '取消',
             type: 'warning',
         }
@@ -287,13 +287,13 @@ const couponEnd = async (id) => {
     if(isdel!=='confirm'){
         return
     }
-    //调用失效api
+    //調用失效api
     const res=await endCouponFn(id)
     if(res.msg&&res.msg!=='ok'){
         return ElMessage.error(res.msg)
     }
     ElMessage({
-        message: '该优惠券已失效',
+        message: '該優惠券已失效',
         type: 'success',
     })
     getCouponList()

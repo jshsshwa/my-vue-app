@@ -3,7 +3,7 @@
     <div>
         <el-card>
             <el-col :span="6">
-                <el-input placeholder="请输入商品名称" clearable @clear="getCommentList">
+                <el-input placeholder="請輸入商品名稱" clearable @clear="getCommentList">
                     <template #append>
                         <el-button :icon="Search" />
                     </template>
@@ -15,22 +15,23 @@
                         <div class="setComment">
                             <el-avatar :size="50" :src="scope.row.user.avatar" fit="cover" />
                             <div>
-                                <p><span class="p1">{{ scope.row.user.username }}</span></p>
-                                <p>{{ scope.row.review.data }}
-                                </p>
                                 <p>
-                                    <el-avatar v-for="(item, i) in scope.row.review.image" :key="i" shape="square"
-                                        :size="80" :src="item" />
-
+                                    <span class="p1">{{ scope.row.user.username }}</span>
+                                </p>
+                                <p>{{ scope.row.review.data }}</p>
+                                <p>
+                                    <el-avatar v-for="(item, i) in scope.row.review.image" :key="i" shape="square" :size="80" :src="item" />
                                 </p>
                                 <p v-if="!scope.row.extra">
-                                    <el-button type="primary" @click="openDialig(scope.row)">回复</el-button>
+                                    <el-button type="primary" @click="openDialig(scope.row)">回覆</el-button>
                                 </p>
                                 <div v-else class="setMain" v-for="(item, i) in scope.row.extra" :key="i">
-                                    <span>回复：</span>
+                                    <span>回覆：</span>
                                     {{ item.data }}
                                     <p>
-                                        <span style="color:#409eff;cursor: pointer;" @click="oppenDialogEdit(scope.row,item.data)">修改</span>
+                                        <span style="color: #409eff; cursor: pointer" @click="oppenDialogEdit(scope.row, item.data)"
+                                            >修改</span
+                                        >
                                     </p>
                                 </div>
                             </div>
@@ -45,45 +46,36 @@
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column label="评分">
+                <el-table-column label="評分">
                     <template #default="scope">
                         <div>
                             <p>用户：{{ scope.row.user.username }}</p>
                             <span>
                                 <el-rate v-model="scope.row.rating" disabled show-score text-color="#ff9900" />
-
                             </span>
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="review_time" label="评价时间" />
-                <el-table-column label="是否显示评价">
+                <el-table-column prop="review_time" label="評價時間" />
+                <el-table-column label="是否顯示評價">
                     <template #default="scope">
                         <div>
                             <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="0" @change="changeHandle(scope.row)" />
-
-
                         </div>
                     </template>
                 </el-table-column>
-
-
-
             </el-table>
-
         </el-card>
-        <el-dialog v-model="dialogVisible" title="回复商品评价" width="40%">
+        <el-dialog v-model="dialogVisible" title="回覆商品評價" width="40%">
             <el-form :model="formData">
-                <el-form-item label="回复内容">
+                <el-form-item label="回覆內容">
                     <el-input v-model="formData.data" type="textarea" />
                 </el-form-item>
             </el-form>
             <template #footer>
                 <span class="dialog-footer">
                     <el-button @click="dialogVisible = false">取消</el-button>
-                    <el-button type="primary" @click="submitOk">
-                        确定
-                    </el-button>
+                    <el-button type="primary" @click="submitOk"> 確定 </el-button>
                 </span>
             </template>
         </el-dialog>
@@ -91,84 +83,80 @@
 </template>
 
 <script setup>
-import { ElMessage } from 'element-plus'
-import { editCommentStatusFn,getCommentListFn, setCommentFn } from '@/api/comment.js'
-import { Search } from '@element-plus/icons-vue'
-import { ref, reactive } from 'vue'
+import {ElMessage} from 'element-plus';
+import {editCommentStatusFn, getCommentListFn, setCommentFn} from '@/api/comment.js';
+import {Search} from '@element-plus/icons-vue';
+import {ref, reactive} from 'vue';
 
-const tableData = ref([])
-const page = ref(1)
+const tableData = ref([]);
+const page = ref(1);
 const queryData = reactive({
     title: ''
-})
-const id = ref(null)
-const dialogVisible = ref(false)
-
+});
+const id = ref(null);
+const dialogVisible = ref(false);
 
 const formData = reactive({
     data: ''
-})
+});
 
-//打开新增回复弹框
+//打開新增回覆彈框
 const openDialig = (row) => {
-    console.log(row)
-    formData.data=''
-    id.value = row.id
-    dialogVisible.value = true
-}
-//打开修改回复
-const oppenDialogEdit=(row,msg)=>{
-    console.log(row)
-    id.value = row.id
-    formData.data=msg
-    dialogVisible.value = true
-}
+    console.log(row);
+    formData.data = '';
+    id.value = row.id;
+    dialogVisible.value = true;
+};
+//打開修改回覆
+const oppenDialogEdit = (row, msg) => {
+    console.log(row);
+    id.value = row.id;
+    formData.data = msg;
+    dialogVisible.value = true;
+};
 
-//回复评价
+//回覆評價
 const submitOk = async () => {
-    const res = await setCommentFn(id.value, formData)
-    console.log(res)
+    const res = await setCommentFn(id.value, formData);
+    console.log(res);
     if (res.msg && res.msg !== 'ok') {
-        return ElMessage.error(res.msg)
+        return ElMessage.error(res.msg);
     }
-    dialogVisible.value = false
+    dialogVisible.value = false;
     ElMessage({
-        message: '回复成功',
-        type: 'success',
-    })
-    getCommentList()
+        message: '回覆成功',
+        type: 'success'
+    });
+    getCommentList();
+};
 
-}
-
-//获取评论列表
+//獲取評論列表
 const getCommentList = async () => {
-    const res = await getCommentListFn(page.value, queryData.title)
-    console.log(res)
+    const res = await getCommentListFn(page.value, queryData.title);
+    console.log('獲取評論列表', res);
     if (res.msg && res.msg !== 'ok') {
-        return ElMessage.error(res.msg)
+        return ElMessage.error(res.msg);
     }
-    tableData.value = res.data.list
-}
-getCommentList()
+    tableData.value = res.data.list;
+};
+getCommentList();
 
-//修改状态
-const changeHandle=async (row)=>{
-    console.log(row.status)
-    const res=await editCommentStatusFn(row.id,row.status)
-    console.log(res)
-    if(res.msg&&res.msg!=='ok'){
-        return ElMessage.error(res.msg)
+//修改狀態
+const changeHandle = async (row) => {
+    console.log(row.status);
+    const res = await editCommentStatusFn(row.id, row.status);
+    console.log(res);
+    if (res.msg && res.msg !== 'ok') {
+        return ElMessage.error(res.msg);
     }
     ElMessage({
-        message: '状态修改成功',
-        type: 'success',
-    })
-
-}
-
+        message: '狀態修改成功',
+        type: 'success'
+    });
+};
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .el-card {
     margin-top: 20px;
 
@@ -199,16 +187,11 @@ const changeHandle=async (row)=>{
         width: 100%;
 
         p {
-
             margin: 0px;
             padding: 0px;
             line-height: 30px;
-
         }
-
     }
-
-
 
     .p1 {
         font-weight: bold;
@@ -225,6 +208,5 @@ const changeHandle=async (row)=>{
         margin-bottom: 15px;
         margin-top: 15px;
     }
-
 }
 </style>

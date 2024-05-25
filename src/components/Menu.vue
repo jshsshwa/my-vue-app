@@ -2,7 +2,16 @@
 <template>
     <div>
         <!-- <h1 style="color:#fff">{{ $store.state.activePath }}</h1> -->
-        <el-menu active-text-color="#409EFF" background-color="#32363f" text-color="#fff" unique-opened :collapse-transition="false" router :default-active="defaultActive" :collapse="$store.state.iscollapse">
+        <el-menu
+            active-text-color="#409EFF"
+            background-color="#32363f"
+            text-color="#fff"
+            unique-opened
+            :collapse-transition="false"
+            router
+            :default-active="defaultActive"
+            :collapse="$store.state.iscollapse"
+        >
             <!-- 一級菜單 -->
             <el-sub-menu :index="item.id + ''" v-for="item in menus" :key="item.id">
                 <!-- 一級菜單內容 -->
@@ -13,7 +22,12 @@
                     <span>{{ item.name }}</span>
                 </template>
                 <!-- 二級菜單 -->
-                <el-menu-item :index="subItem.frontpath" v-for="subItem in item.child" :key="subItem.id" @click="saveNav(subItem.frontpath)">
+                <el-menu-item
+                    :index="subItem.frontpath"
+                    v-for="subItem in item.child"
+                    :key="subItem.id"
+                    @click="saveNav(subItem.frontpath)"
+                >
                     <!-- 二級菜單內容 -->
                     <template #title>
                         <el-icon>
@@ -32,6 +46,7 @@ import {useStore} from 'vuex';
 import {computed, ref, onMounted} from 'vue';
 import {onBeforeRouteUpdate} from 'vue-router';
 const store = useStore();
+//console.log(store.state.menus);
 //定義默認展開
 let defaultActive = ref('/home');
 //定義常量接收倉庫中的導航數據
