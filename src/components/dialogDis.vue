@@ -4,10 +4,10 @@
         <el-form :model="formData" label-width="100px">
             <el-form-item label="時間選擇">
                 <el-radio-group v-model="formData.type">
-                    <el-radio-button label="all">全部</el-radio-button>
-                    <el-radio-button label="today">今天</el-radio-button>
-                    <el-radio-button label="yesterday">昨天</el-radio-button>
-                    <el-radio-button label="last7days">最近7天</el-radio-button>
+                    <el-radio-button value="all">全部</el-radio-button>
+                    <el-radio-button value="today">今天</el-radio-button>
+                    <el-radio-button value="yesterday">昨天</el-radio-button>
+                    <el-radio-button value="last7days">最近7天</el-radio-button>
                 </el-radio-group>
             </el-form-item>
             <el-form-item label="開始日期">
@@ -19,9 +19,9 @@
 
             <el-form-item label="用户類型">
                 <el-radio-group v-model="formData.level">
-                    <el-radio-button :label="0">全部</el-radio-button>
-                    <el-radio-button :label="1">一級推廣</el-radio-button>
-                    <el-radio-button :label="2">二級推廣</el-radio-button>
+                    <el-radio-button :value="0">全部</el-radio-button>
+                    <el-radio-button :value="1">一級推廣</el-radio-button>
+                    <el-radio-button :value="2">二級推廣</el-radio-button>
                 </el-radio-group>
             </el-form-item>
             <el-form-item label="">

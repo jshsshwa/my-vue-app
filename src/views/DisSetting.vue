@@ -6,8 +6,8 @@
                 <p>基礎設置</p>
                 <el-form-item label="分銷啓用">
                     <el-radio-group v-model="formData.distribution_open">
-                        <el-radio :label="1" border>是</el-radio>
-                        <el-radio :label="0" border>否</el-radio>
+                        <el-radio :value="1" border>是</el-radio>
+                        <el-radio :value="0" border>否</el-radio>
                     </el-radio-group>
                 </el-form-item>
 
@@ -27,8 +27,8 @@
                 </el-form-item>
                 <el-form-item label="自購返傭">
                     <el-radio-group v-model="formData.is_self_brokerage">
-                        <el-radio :label="1" border>是</el-radio>
-                        <el-radio :label="0" border>否</el-radio>
+                        <el-radio :value="1" border>是</el-radio>
+                        <el-radio :value="0" border>否</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <p>結算設置</p>
@@ -39,8 +39,8 @@
                 </el-form-item>
                 <el-form-item label="結算方式">
                     <el-radio-group v-model="formData.brokerage_method">
-                        <el-radio label="hand" border>手動結算</el-radio>
-                        <el-radio label="wx" border>自動結算到微信</el-radio>
+                        <el-radio value="hand" border>手動結算</el-radio>
+                        <el-radio value="wx" border>自動結算到微信</el-radio>
                     </el-radio-group>
                 </el-form-item>
 
