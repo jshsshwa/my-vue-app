@@ -1,4 +1,4 @@
-<!-- 分销模块 -->
+<!-- 分銷模塊 -->
 <template>
     <div>
         <el-row :gutter="20">
@@ -12,7 +12,7 @@
         <el-card>
             <el-row :gutter="30">
                 <el-col :span="6">
-                    <el-input placeholder="请输入搜索信息" clearable v-model="queryData.keyword" @clear="getDisList">
+                    <el-input placeholder="請輸入搜索信息" clearable v-model="queryData.keyword" @clear="getDisList">
                         <template #append>
                             <el-button :icon="Search" @click="getDisList" />
                         </template>
@@ -30,7 +30,7 @@
 
             <el-table :data="disListValue" style="width: 100%" border stripe>
                 <!-- <el-table-column prop="date" label="Date" width="180" /> -->
-                <el-table-column label="头像">
+                <el-table-column label="頭像">
                     <template #default="{row}">
                         <div>
                             <el-avatar :size="50" :src="row.avatar"> </el-avatar>
@@ -41,20 +41,20 @@
                     <template #default="{row}">
                         <div>
                             <p>用户：{{ row.username }}</p>
-                            <p>电话：{{ row.phone }}</p>
+                            <p>電話：{{ row.phone }}</p>
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="share_num" label="推广数量" />
-                <el-table-column prop="share_order_num" label="订单数量" />
-                <el-table-column prop="order_price" label="订单金额" />
-                <el-table-column prop="commission" label="账户佣金" />
-                <el-table-column prop="cash_out_price" label="已提现佣金" />
-                <el-table-column prop="no_cash_out_price" label="未提现佣金" />
+                <el-table-column prop="share_num" label="推廣數量" />
+                <el-table-column prop="share_order_num" label="訂單數量" />
+                <el-table-column prop="order_price" label="訂單金額" />
+                <el-table-column prop="commission" label="賬户佣金" />
+                <el-table-column prop="cash_out_price" label="已提現佣金" />
+                <el-table-column prop="no_cash_out_price" label="未提現佣金" />
 
                 <el-table-column label="操作">
                     <template #default="{row}">
-                        <el-button type="primary" size="small" text @click="openDisList(row.id)">推广明细</el-button>
+                        <el-button type="primary" size="small" text @click="openDisList(row.id)">推廣明細</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -70,13 +70,13 @@ import {ref, reactive} from 'vue';
 import {Search} from '@element-plus/icons-vue';
 const disData = ref([]);
 
-//定义查询参数
+//定義查詢參數
 const queryData = reactive({
     keyword: '',
     type: 'all'
 });
 
-//获取分销数据统计
+//獲取分銷數據統計
 const getDisData = async () => {
     const res = await getDisDataFn();
     console.log(res);
@@ -88,7 +88,7 @@ const getDisData = async () => {
 getDisData();
 const page = ref(1);
 const disListValue = ref([]);
-//获取分销推广员列表
+//獲取分銷推廣員列表
 const getDisList = async () => {
     const res = await getDisListFn(page.value, queryData);
     console.log(res);
